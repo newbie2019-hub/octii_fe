@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+## 1. Form Handling (React Hook Form + Zod)
+- **Schema First**: Define a Zod schema for every form. Name it `<Feature>Schema` (e.g., `CardEditorSchema`).
+- **Type Inference**: Derive form types directly from the Zod schema:
+  `type CardEditorValues = z.infer<typeof CardEditorSchema>`.
+- **Shadcn Integration**: Use the standard Shadcn `<Form />` wrapper components.
+- **Validation**:
+  - Perform all validation in Zod (never use native HTML validation attributes).
+  - Use `mode: "onTouched"` in `useForm` for better UX.
+- **Submit Logic**: Keep the `onSubmit` handler clean. Logic for API calls should be moved to a custom hook or service.
+
+## 2. Component Architecture
+- **Atomic Components**: Use **Shadcn/UI** as the foundation. Do not modify the `components/ui` folder directly unless absolutely necessary.
+- **Composition**: Prefer composition over large, complex prop-drilling. Break large features into:
+  - `components/`: Pure UI components (dumb).
+  - `hooks/`: Local state/logic (smart).
+  - `services/`: API/External logic.
+- **Naming**: Use PascalCase for components (`StudySession.tsx`) and camelCase for hooks (`useStudySession.ts`).
+
+## 3. TypeScript & Logic
+- **Strictness**: Avoid `any`. Use `unknown` if a type is truly dynamic.
+- **Satisfies**: Use the `satisfies` operator for object configurations to ensure type safety while maintaining literal narrowness.
+- **Immutability**: Treat state as immutable. Use functional updates in `useState` or `Zustand` setters.
+- **Error Handling**: Use Zod's `.safeParse()` for external data (API responses, LocalStorage).
+
+## 4. UI & Usability
+- **Tailwind**: Use Tailwind classes for all styling. Follow the mobile-first approach (`sm:`, `md:`, `lg:`).
+- **Loading States**: Every interactive action (like saving a card) must have a visual loading state (e.g., a spinner or disabled button).
+- **Accessibility**: Ensure all form inputs have associated `<FormLabel />` and `<FormMessage />` for screen readers.
+
+## 5. Module Boundaries
+- **Encapsulation**: Features must only export what is necessary via a feature-level `index.ts`.
+- **Imports**: Avoid deep nested imports. Use the `@/` alias defined in `tsconfig.json`.

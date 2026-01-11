@@ -1,0 +1,23 @@
+---
+alwaysApply: true
+---
+src/
+├── assets/          # Global static files (images, fonts, global CSS)
+├── common/          # "Shared" or "Core" layer
+│   ├── components/  # Atomic UI: Buttons, Inputs, Modals (Design System)
+│   ├── hooks/       # useAuth, useDebounce, useTheme
+│   ├── utils/       # formatDate, apiHelpers
+│   └── types/       # Global TypeScript interfaces
+├── features/        # The heart of your app (Domain-driven)
+│   ├── deck-editor/ # Everything for creating/editing collaborative decks
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/ # API calls specific to deck editing
+│   │   └── index.ts  # Public API for this feature
+│   ├── study-session/ # The "Flashcard Flip" and "Pomodoro" logic
+│   ├── analytics/    # The Heatmap and Accuracy tracking logic
+│   └── auth/         # Login, Register, Profile
+├── layouts/         # Page wrappers (DashboardLayout, AuthLayout)
+├── pages/           # Flat list of routes (imports from features/layouts)
+├── store/           # Global state (Zustand/Redux slices)
+└── App.tsx          # Main entry point and Provider setup
